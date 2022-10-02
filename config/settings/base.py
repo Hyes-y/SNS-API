@@ -2,6 +2,7 @@
 Project base settings
 """
 from pathlib import Path
+import datetime
 import os
 import environ
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     # rest_framework
     'rest_framework',
     # local apps
+    'apps.account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +89,8 @@ DATABASES = {
     }
 }
 
+# Auth model setting
+AUTH_USER_MODEL = 'account.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -105,6 +109,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    'UPDATE_LAST_LOGIN': True,
+}
+
 
 # rest framework setting
 REST_FRAMEWORK = {
