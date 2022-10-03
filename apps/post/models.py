@@ -17,9 +17,11 @@ class Post(models.Model):
     likes = models.ManyToManyField(USER, blank=True, related_name='liked_posts')
 
     def count_likes(self):
+        """ 좋아요 수 계산 함수 """
         return self.likes.count()
 
     def hit(self):
+        """ 조회수 증가 함수 """
         self.views += 1
         self.save()
 
@@ -31,4 +33,5 @@ class HashTag(models.Model):
         return self.content
 
     def count_posts(self):
+        """ 태그별 게시글 수 계산 함수 """
         return self.posts.count()

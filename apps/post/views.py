@@ -41,7 +41,7 @@ class PostViewSet(ModelViewSet):
                     Post.objects\
                         .filter(is_deleted=False, hashtags__content__in=params)\
                         .annotate(tag_cnt=Count('id'))\
-                        .filter(tag_cnt=len(params))
+                        .filter(tag_cnt__gte=len(params))
             else:
                 queryset = Post.objects.filter(is_deleted=False).prefetch_related('hashtags')
 
