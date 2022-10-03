@@ -6,7 +6,7 @@ from .models import User, UserManager
 
 
 class UserCreationForm(forms.ModelForm):
-    # 사용자 생성 폼
+    """ 사용자 생성 폼 """
     email = forms.EmailField(
         label=_('Email'),
         required=True,
@@ -55,7 +55,7 @@ class UserCreationForm(forms.ModelForm):
         fields = ('email', 'nickname')
 
     def clean_password2(self):
-        # 두 비밀번호 입력 일치 확인
+        """ 비밀번호 일치 확인 """
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
@@ -63,7 +63,6 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        # Save the provided password in hashed format
         user = super(UserCreationForm, self).save(commit=False)
         user.email = UserManager.normalize_email(self.cleaned_data['email'])
         user.set_password(self.cleaned_data["password1"])
@@ -73,7 +72,7 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    # 비밀번호 변경 폼
+    """ 비밀번호 변경 폼 """
     password = ReadOnlyPasswordHashField(
         label=_('Password')
     )
@@ -83,7 +82,4 @@ class UserChangeForm(forms.ModelForm):
         fields = ('email', 'password', 'is_active', 'is_superuser')
 
     def clean_password(self):
-        # Regardless of what the user provides, return the initial value.
-        # This is done here, rather than on the field, because the
-        # field does not have access to the initial value
         return self.initial["password"]

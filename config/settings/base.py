@@ -17,6 +17,7 @@ environ.Env.read_env(
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     # local apps
     'apps.account.apps.AccountConfig',
+    'apps.post.apps.PostConfig',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +118,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": True,
     'UPDATE_LAST_LOGIN': True,
+    'ALGORITHM': 'HS256',
 }
 
 
@@ -126,6 +129,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": (
+        # "rest_framework.permissions.IsAuthenticated",
         "rest_framework.permissions.AllowAny",
     ),
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
