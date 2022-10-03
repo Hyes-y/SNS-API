@@ -15,7 +15,7 @@ class IsOwnerOrReadOnly(BasePermission):
             return True
         else:
             token = request.headers.get('Authorization').split(" ")[1]
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=settings.ALGORITHM)
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=settings.SIMPLE_JWT["ALGORITHM"])
             token_user = payload.get('user_id')
 
             return bool(obj.user.id == token_user)
