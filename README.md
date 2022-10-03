@@ -135,6 +135,9 @@ Django Rest Framework 를 이용한 REST API 서버로
 
 ## ERD
 
+![image](https://user-images.githubusercontent.com/55697800/193615074-4b9cdbae-d440-4948-9170-31d6373450b7.png)
+
+
 - User model
   - User 모델은 Django의 `AbstractBaseUser`를 overriding 
 - Post model
