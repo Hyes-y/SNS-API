@@ -2,6 +2,7 @@
 Project base settings
 """
 from pathlib import Path
+import datetime
 import os
 import environ
 
@@ -15,6 +16,7 @@ environ.Env.read_env(
 )
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
@@ -39,6 +41,8 @@ INSTALLED_APPS = [
     # rest_framework
     'rest_framework',
     # local apps
+    'apps.account.apps.AccountConfig',
+    'apps.post.apps.PostConfig',
 ]
 
 MIDDLEWARE = [
@@ -87,6 +91,8 @@ DATABASES = {
     }
 }
 
+# Auth model setting
+AUTH_USER_MODEL = 'account.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -106,6 +112,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": True,
+    'UPDATE_LAST_LOGIN': True,
+    'ALGORITHM': 'HS256',
+}
+
+
 # rest framework setting
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -113,6 +129,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_PERMISSION_CLASSES": (
+        # "rest_framework.permissions.IsAuthenticated",
         "rest_framework.permissions.AllowAny",
     ),
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
